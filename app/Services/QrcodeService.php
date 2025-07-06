@@ -10,7 +10,7 @@ class QrcodeService{
     protected $qrcode;
     public function __construct($data) {
         
-        $this->qrcode = new Builder(data: $data)->build();
+        $this->qrcode = (new Builder(data: $data))->build();
     }
     function generateImage($filename){
         $filename ='qrcodes/'.$filename.'.png' ;
