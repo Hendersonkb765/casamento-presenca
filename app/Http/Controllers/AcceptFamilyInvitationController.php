@@ -24,7 +24,7 @@ class AcceptFamilyInvitationController extends Controller
             
         }
         
-        $guest = (new InvitationService()->toAcceptFamily($data,$family));
+        $guest = (new InvitationService())->toAcceptFamily($data,$family);
         
 
         
