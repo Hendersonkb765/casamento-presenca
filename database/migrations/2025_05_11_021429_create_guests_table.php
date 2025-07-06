@@ -10,8 +10,9 @@ class CreateGuestsTable extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone', 20)->nullable();
+            $table->string('token')->unique();
             $table->boolean('confirmed')->nullable();
+            $table->string('qrcode')->nullable();
             $table->timestamps();
         });
     }

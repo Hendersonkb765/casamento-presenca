@@ -27,6 +27,7 @@
             }
         }
     </script>
+    @vite(['resources/js/app.js'])
     <style>
         body {
             background-color: #F9F5F0;
@@ -57,71 +58,9 @@
     <div class="min-h-screen flex flex-col items-center justify-center p-4">
         <div class="max-w-3xl w-full bg-white rounded-lg shadow-xl overflow-hidden">
             <!-- Cabeçalho -->
-            <div class="bg-marsala text-white text-center py-8 px-6">
-                <h1 class="playfair text-4xl md:text-5xl font-semibold mb-2">Henderson & Gizelli</h1>
-                <p class="text-lg opacity-90">Vão se casar!</p>
-                <div class="mt-4 flex justify-center">
-                    <svg class="w-32 h-8" viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0,10 C30,20 70,0 100,10" stroke="white" stroke-width="1" fill="none" stroke-dasharray="4 2"/>
-                    </svg>
-                </div>
-                <p class="mt-4 text-xl">13 de Setembro de 2024</p>
-                <p class="mt-4 text-xl">As 16h</p>
-            </div>
+            <x-header/>
             
-            <!-- Imagem do casal -->
-            <div class="relative">
-                <div class="flex justify-center -mt-6 mb-6">
-                    <div class="w-48 h-48 rounded-full bg-white p-2 shadow-lg couple-image">
-                        <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <clipPath id="coupleCircle">
-                                    <circle cx="100" cy="100" r="98" />
-                                </clipPath>
-                            </defs>
-                            <circle cx="100" cy="100" r="98" fill="#F9F5F0" />
-                            <g clip-path="url(#coupleCircle)">
-                                <!-- Fundo decorativo -->
-                                <rect x="0" y="0" width="200" height="200" fill="#F9F5F0" />
-                                <path d="M0,160 C40,120 160,120 200,160 L200,200 L0,200 Z" fill="#8B2439" opacity="0.1" />
-                                
-                                <!-- Noivo -->
-                                <g transform="translate(50, 60)">
-                                    <!-- Corpo -->
-                                    <path d="M0,50 C0,30 20,30 30,50 L25,100 L5,100 Z" fill="#333" />
-                                    <!-- Cabeça -->
-                                    <circle cx="15" cy="30" r="20" fill="#F5D0B0" />
-                                    <!-- Cabelo -->
-                                    <path d="M-5,30 C-5,10 35,10 35,30 C35,15 -5,15 -5,30 Z" fill="#333" />
-                                    <!-- Rosto -->
-                                    <circle cx="8" cy="25" r="2" fill="#333" /> <!-- Olho -->
-                                    <circle cx="22" cy="25" r="2" fill="#333" /> <!-- Olho -->
-                                    <path d="M10,35 C15,38 20,35 20,35" stroke="#333" stroke-width="1" fill="none" /> <!-- Sorriso -->
-                                </g>
-                                
-                                <!-- Noiva -->
-                                <g transform="translate(120, 60)">
-                                    <!-- Vestido -->
-                                    <path d="M0,50 C0,30 20,30 30,50 L25,100 L5,100 Z" fill="#FFF" />
-                                    <!-- Cabeça -->
-                                    <circle cx="15" cy="30" r="20" fill="#F5D0B0" />
-                                    <!-- Cabelo -->
-                                    <path d="M-5,30 C-5,10 35,10 35,30 C35,15 -5,15 -5,30 Z" fill="#6A1C2B" />
-                                    <!-- Rosto -->
-                                    <circle cx="8" cy="25" r="2" fill="#333" /> <!-- Olho -->
-                                    <circle cx="22" cy="25" r="2" fill="#333" /> <!-- Olho -->
-                                    <path d="M10,35 C15,38 20,35 20,35" stroke="#333" stroke-width="1" fill="none" /> <!-- Sorriso -->
-                                    <!-- Véu -->
-                                    <path d="M-5,20 C-5,10 35,10 35,20" stroke="#FFF" stroke-width="2" fill="none" />
-                                </g>
-                                
-                                <!-- Corações -->
-                                <path d="M90,80 C95,70 105,70 110,80 C115,70 125,70 130,80 C135,90 125,100 110,110 C95,100 85,90 90,80 Z" fill="#8B2439" opacity="0.6" />
-                            </g>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+            
             
             <!-- Conteúdo -->
             <div class="p-6 md:p-10">
@@ -153,28 +92,20 @@
                     </div>
                 @endif
                 
-
-                <form id="rsvpForm" method="POST" action="{{route('register')}}" action=""class="space-y-6">
+                <form id="rsvpForm" method="POST" action="{{route('register-family',$data['family']['token'])}}" class="space-y-6">
                     @csrf
-                    @if(!empty($data['guest']))
-                    
-                        <div>
-                            <input type="checkbox" id="member_{{$data['guest']['id']}}" name="member_{{$data['guest']['id']}}" value="{{$data['guest']['id']}}" 
-                            class="w-5 h-5 checkbox-marsala rounded" checked>
-                            <label for="member_${member.id}" class="ml-3 text-gray-700 flex-1">{{$data['guest']['name']}}</label>
-                        </div>
-                    @else
+               
                     <div id="familyMembers" class="space-y-3 border-b border-gray-200 pb-6">
                         <div>
                             <input type="checkbox"  id="member_{{$data['family']['responsibleName']['id']}}" name="member_{{$data['family']['responsibleName']['id']}}" value="{{$data['family']['responsibleName']['id']}}" 
                             class="w-5 h-5 checkbox-marsala rounded" checked>
                             <label for="member_${{$data['family']['responsibleName']['id']}}" class="ml-3 text-gray-700 flex-1">{{$data['family']['responsibleName']['name']}}</label>
-                            <span class="text-sm text-gray-500 hidden md:inline">Responsável</span>
+                            <span class="text-sm text-gray-500 md:inline">Responsável</span>
                         </div> 
                     @foreach ($data['family']['familyMembers'] as $member )
                     
                         <div>
-                            <input type="checkbox" id="member_${{$member['id']}}" name="member_${{$member['id']}}" value="{{$member['id']}}" 
+                            <input type="checkbox" id="member_${{$member['id']}}" name="member_{{$member['id']}}" value="{{$member['id']}}" 
                             class="w-5 h-5 checkbox-marsala rounded" checked>
                             <label for="member_${{$member['id']}}" class="ml-3 text-gray-700 flex-1">{{$member['name']}}</label>
                         </div> 
@@ -182,7 +113,7 @@
                     @endforeach
                 </div>
                     
-                    @endif
+                    
 
                 
                     <div class="pt-3">
@@ -198,17 +129,7 @@
             </div>
             
             <!-- Rodapé -->
-            <div class="bg-marsala bg-opacity-10 p-6 text-center">
-                <div class="flex justify-center mb-4">
-                    <svg class="w-32 h-8" viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0,10 C30,20 70,0 100,10" stroke="#8B2439" stroke-width="1" fill="none" stroke-dasharray="4 2"/>
-                    </svg>
-                </div>
-                <p class="text-marsala">Cerimônia e Recepção</p>
-                <p class="text-gray-700 mt-2">Espaço Villa Jardim - Rua das Flores, 123</p>
-                <p class="text-gray-700">São Paulo - SP</p>
-                <p class="text-gray-700 mt-2">Início às 16h</p>
-            </div>
+            <x-footer/>
         </div>
     </div>
     
@@ -242,13 +163,6 @@
             const closeModalBtn = document.getElementById('closeModal');
             let generalLack= false
         
-            
-            // Preencher nome do convidado principal
-            
-            
-            // Preencher membros da família
-           
-            
             // Adicionar botão para selecionar/desmarcar todos
             const selectAllDiv = document.createElement('div');
             selectAllDiv.className = 'flex justify-end mt-2';
@@ -265,7 +179,7 @@
             function verifyCheckbox(){
                 const allUnchecked = Array.from(checkboxes).every(cb=>!cb.checked)
             
-                if (allUnchecked ){
+                if (allUnchecked){
                     generalLack=true
                     console.log(generalLack)
                 }
@@ -274,6 +188,8 @@
                     console.log(generalLack)
                 }
             }
+
+            
             
             checkboxes.forEach(cb => {
             cb.addEventListener('change', verifyCheckbox);
@@ -318,4 +234,6 @@
         });
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93de6c331129d833',t:'MTc0NjkzMjM5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+<script>function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93de6c331129d833',t:'MTc0NjkzMjM5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </html>

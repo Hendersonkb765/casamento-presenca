@@ -9,5 +9,14 @@ class Family extends Model
 {
     use HasFactory;
 
+
+    public function guests(){
+
+        return $this->hasMany(Guest::class);
+    }
+
+    public function responsibleMember(){
+        return $this->belongsTo(Guest::class);
+    }
     
 }

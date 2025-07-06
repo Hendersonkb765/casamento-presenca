@@ -7,6 +7,7 @@ use App\Models\Guest;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,18 +22,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+      for ($i = 0; $i < 3; $i++) {
+        $family = Family::factory()->create();
 
-        $family1= Family::factory()->create();
-        $guestFamilys = Guest::factory(5)->create(['family_id'=>$family1->id]);
+    
+        $responsibleGuest = Guest::factory()->create(['family_id' => $family->id]);
 
-        $family1= Family::factory()->create();
-        $guestFamilys = Guest::factory(5)->create(['family_id'=>$family1->id]);
-        
-        $family1= Family::factory()->create();
-        $guestFamilys = Guest::factory(5)->create(['family_id'=>$family1->id]);
+   
+        $family->update(['responsible_id' => $responsibleGuest->id]);
+
+     
+        Guest::factory(4)->create(['family_id' => $family->id]);
+        }
+
 
         Guest::factory(20)->create();
-      
         
 
         

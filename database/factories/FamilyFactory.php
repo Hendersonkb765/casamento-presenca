@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Family;
 use App\Models\Guest;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use Illuminate\Support\Str;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Family>
  */
@@ -21,7 +21,8 @@ class FamilyFactory extends Factory
         $guest = Guest::factory()->create();
         return [
             "name"=> fake()->name,
-            "responsible_id"=> $guest->id,
+            "responsible_id"=> null,
+            "token"=> Str::uuid()
         ];
     }
 }

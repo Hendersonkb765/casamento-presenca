@@ -10,7 +10,8 @@ class CreateFamiliesTable extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable(); // Optional: e.g., "Silva Family"
-            $table->foreignId('responsible_id')->constrained('guests')->cascadeOnDelete();
+            $table->foreignId('responsible_id')->nullable()->constrained('guests')->cascadeOnDelete();
+            $table->string('token')->unique();
             $table->timestamps();
         });
     }

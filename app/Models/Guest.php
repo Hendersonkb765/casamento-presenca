@@ -9,6 +9,11 @@ class Guest extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'confirmed',
+        'qrcode',
+        'token'
+    ];
 
     public function family(){
         return $this->belongsTo(Family::class);
